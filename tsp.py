@@ -34,7 +34,6 @@ def crossover(ind1, ind2, pc):
     nb = int(pc * len(ind1))
     offsp1 = ind1[:nb] + ofs2[nb:]
     offsp2 = ind2[:nb] + ofs1[nb:]
-    
     return offsp1, offsp1
 
 def correction(ind):
@@ -88,17 +87,16 @@ def unique(liste):
             set_list.append(elt)
     return set_list
 
-def selection_rang(population, fitnessValues):
+def selection_rang(fitnessValues):
     select = copy.deepcopy(fitnessValues)
     nwlists = unique(select)
     nwlist = sorted(nwlists, key=lambda x: x[1])
-    return nwlist[0][0], nwlist[0][1]
+    return nwlist[0][0], nwlist[0][0]
 
-def selectionner_cinq(population, fitnessValues):
+def selection(fitnessValues):
     select = copy.deepcopy(fitnessValues)
     nwlist = sorted(select, key=lambda x: x[1])
-    return nwlist[0][0], nwlist[1][0], nwlist[2][0], nwlist[3][0], nwlist[4][0]
-
+    return nwlist[0]
 
 graphe = [  [0, 7, 6, 8, 3], 
             [7, 0, 2, 4, 3], 
@@ -119,7 +117,7 @@ def main():
         nvlle_gen     = []
         fitnessValues = fitnessFunction(population, graphe)
         for j in range(6):
-            s1, s2 = selection_rang(population, fitnessValues)
+            s1, s2 = selection_rang(fitnessValues)
             o1, o2 = crossover(s1, s2, pc)
             o11 = mutation(o1, pm)
             o22 = mutation(o2, pm)
@@ -129,7 +127,7 @@ def main():
             nvlle_gen.append(o22)
         population = copy.deepcopy(nvlle_gen)
         i = i+1
-    return selection_rang(population, fitnessValues)
+    return selection(fitnessValues)
     # i1, i2, i3, i4, i5 = selectionner_cinq(population, fitnessValues)
     # return (i1, poids_ind(i1)), (i2, poids_ind(i2)), (i3, poids_ind(i3)), (i4, poids_ind(i4)), (i5, poids_ind(i5))
 
